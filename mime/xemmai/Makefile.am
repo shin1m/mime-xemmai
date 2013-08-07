@@ -2,7 +2,7 @@ xemmaidir = $(XEMMAI_MODULE_PATH)
 
 xemmai_PROGRAMS = mime.so
 AM_CPPFLAGS = $(XEMMAI_CFLAGS)
-AM_CXXFLAGS = -fPIC
+AM_CXXFLAGS = -std=c++11 -fPIC
 AM_LDFLAGS = -shared
 if DEBUG
 AM_CXXFLAGS += -g

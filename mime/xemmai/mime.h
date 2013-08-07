@@ -13,9 +13,8 @@ namespace xemmai
 using ::xemmai::t_object;
 using ::xemmai::t_scan;
 using ::xemmai::t_value;
-using ::xemmai::t_transfer;
-using ::xemmai::t_scoped;
 using ::xemmai::t_slot;
+using ::xemmai::t_scoped;
 using ::xemmai::t_fundamental;
 using ::xemmai::t_type_of;
 using ::xemmai::f_check;
@@ -37,7 +36,7 @@ public:
 		return f_global()->f_type<T>();
 	}
 	template<typename T>
-	t_transfer f_as(const T& a_value) const
+	t_scoped f_as(const T& a_value) const
 	{
 		return f_global()->f_as(a_value);
 	}
@@ -89,13 +88,13 @@ class t_bytes_source
 {
 	t_object* v_read;
 	t_scoped v_buffer;
-	size_t v_n;
-	size_t v_i;
+	size_t v_n = 0;
+	size_t v_i = 0;
 
 	void f_read();
 
 public:
-	t_bytes_source(t_object* a_read) : v_read(a_read), v_buffer(t_bytes::f_instantiate(1024)), v_n(0), v_i(0)
+	t_bytes_source(t_object* a_read) : v_read(a_read), v_buffer(t_bytes::f_instantiate(1024))
 	{
 	}
 	int f_get()
@@ -112,10 +111,10 @@ class t_bytes_target
 {
 	t_object* v_write;
 	t_scoped v_buffer;
-	size_t v_n;
+	size_t v_n = 0;
 
 public:
-	t_bytes_target(t_object* a_write) : v_write(a_write), v_buffer(t_bytes::f_instantiate(1024)), v_n(0)
+	t_bytes_target(t_object* a_write) : v_write(a_write), v_buffer(t_bytes::f_instantiate(1024))
 	{
 	}
 	~t_bytes_target()
