@@ -44,14 +44,14 @@ public:
 
 class t_string_source
 {
-	t_object* v_read;
+	const t_value& v_read;
 	std::wstring v_value;
 	std::wstring::const_iterator v_i;
 
 	void f_read();
 
 public:
-	t_string_source(t_object* a_read) : v_read(a_read), v_i(v_value.begin())
+	t_string_source(const t_value& a_read) : v_read(a_read), v_i(v_value.begin())
 	{
 	}
 	int f_get()
@@ -66,11 +66,11 @@ public:
 
 class t_string_target
 {
-	t_object* v_write;
+	const t_value& v_write;
 	std::vector<wchar_t> v_buffer;
 
 public:
-	t_string_target(t_object* a_write) : v_write(a_write)
+	t_string_target(const t_value& a_write) : v_write(a_write)
 	{
 	}
 	~t_string_target()
@@ -86,7 +86,7 @@ public:
 
 class t_bytes_source
 {
-	t_object* v_read;
+	const t_value& v_read;
 	t_scoped v_buffer;
 	size_t v_n = 0;
 	size_t v_i = 0;
@@ -94,7 +94,7 @@ class t_bytes_source
 	void f_read();
 
 public:
-	t_bytes_source(t_object* a_read) : v_read(a_read), v_buffer(t_bytes::f_instantiate(1024))
+	t_bytes_source(const t_value& a_read) : v_read(a_read), v_buffer(t_bytes::f_instantiate(1024))
 	{
 	}
 	int f_get()
@@ -109,12 +109,12 @@ public:
 
 class t_bytes_target
 {
-	t_object* v_write;
+	const t_value& v_write;
 	t_scoped v_buffer;
 	size_t v_n = 0;
 
 public:
-	t_bytes_target(t_object* a_write) : v_write(a_write), v_buffer(t_bytes::f_instantiate(1024))
+	t_bytes_target(const t_value& a_write) : v_write(a_write), v_buffer(t_bytes::f_instantiate(1024))
 	{
 	}
 	~t_bytes_target()

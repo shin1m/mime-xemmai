@@ -24,7 +24,7 @@ void t_extension::f_scan(t_scan a_scan)
 
 void t_string_source::f_read()
 {
-	t_scoped p = v_read->f_call();
+	t_scoped p = v_read();
 	if (p) {
 		f_check<const std::wstring*>(p, L"result of read.");
 		v_value = f_as<const std::wstring&>(p);
@@ -37,14 +37,14 @@ void t_string_source::f_read()
 void t_string_target::f_flush()
 {
 	if (v_buffer.empty()) return;
-	v_write->f_call(f_global()->f_as(std::wstring(v_buffer.begin(), v_buffer.end())));
+	v_write(f_global()->f_as(std::wstring(v_buffer.begin(), v_buffer.end())));
 	v_buffer.clear();
 }
 
 void t_bytes_source::f_read()
 {
 	t_bytes& bytes = f_as<t_bytes&>(v_buffer);
-	t_scoped n = v_read->f_call(v_buffer, f_global()->f_as(0), f_global()->f_as(bytes.f_size()));
+	t_scoped n = v_read(v_buffer, f_global()->f_as(0), f_global()->f_as(bytes.f_size()));
 	f_check<size_t>(n, L"result of read.");
 	v_n = f_as<size_t>(n);
 	v_i = 0;
@@ -53,7 +53,7 @@ void t_bytes_source::f_read()
 void t_bytes_target::f_flush()
 {
 	if (v_n <= 0) return;
-	v_write->f_call(v_buffer, f_global()->f_as(0), f_global()->f_as(v_n));
+	v_write(v_buffer, f_global()->f_as(0), f_global()->f_as(v_n));
 	v_n = 0;
 }
 
