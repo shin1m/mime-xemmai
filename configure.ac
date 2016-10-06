@@ -1,8 +1,8 @@
-AC_INIT([mime-xemmai], [201603])
+AC_INIT([mime-xemmai], [201610])
 AM_INIT_AUTOMAKE([foreign nostdinc dist-bzip2 no-dist-gzip])
 AC_CONFIG_SRCDIR([mime/xemmai/mime.cc])
 
-XEMMAI_USE=xemmai-201603
+XEMMAI_USE=xemmai-201610
 PKG_CHECK_MODULES([XEMMAI], [${XEMMAI_USE}], [
 	XEMMAI_MODULE_PATH=`pkg-config --variable=module_path ${XEMMAI_USE}`
 ])
