@@ -1,21 +1,19 @@
 #include "mime.h"
 
+namespace xemmaix
+{
+
 namespace mime
 {
 
-namespace xemmai
+t_extension::t_extension(t_object* a_module) : xemmai::t_extension(a_module)
 {
-
-using ::xemmai::f_define;
-
-t_extension::t_extension(t_object* a_module) : ::xemmai::t_extension(a_module)
-{
-	f_define<void (*)(const t_value&, const t_value&), f_b_encode>(this, L"b_encode");
-	f_define<void (*)(const t_value&, const t_value&, size_t), f_base64_encode>(this, L"base64_encode");
-	f_define<void (*)(const t_value&, const t_value&), f_base64_decode>(this, L"base64_decode");
-	f_define<void (*)(const t_value&, const t_value&), f_q_encode>(this, L"q_encode");
-	f_define<void (*)(const t_value&, const t_value&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode");
-	f_define<void (*)(const t_value&, const t_value&), f_quoted_printable_decode>(this, L"quoted_printable_decode");
+	f_define<void(*)(const t_value&, const t_value&), f_b_encode>(this, L"b_encode");
+	f_define<void(*)(const t_value&, const t_value&, size_t), f_base64_encode>(this, L"base64_encode");
+	f_define<void(*)(const t_value&, const t_value&), f_base64_decode>(this, L"base64_decode");
+	f_define<void(*)(const t_value&, const t_value&), f_q_encode>(this, L"q_encode");
+	f_define<void(*)(const t_value&, const t_value&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode");
+	f_define<void(*)(const t_value&, const t_value&), f_quoted_printable_decode>(this, L"quoted_printable_decode");
 }
 
 void t_extension::f_scan(t_scan a_scan)
@@ -63,5 +61,5 @@ void t_bytes_target::f_flush()
 
 XEMMAI__MODULE__FACTORY(xemmai::t_object* a_module)
 {
-	return new mime::xemmai::t_extension(a_module);
+	return new xemmaix::mime::t_extension(a_module);
 }

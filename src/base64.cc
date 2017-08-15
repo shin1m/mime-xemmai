@@ -1,9 +1,9 @@
 #include "mime.h"
 
-namespace mime
+namespace xemmaix
 {
 
-namespace xemmai
+namespace mime
 {
 
 namespace

@@ -3,10 +3,10 @@
 #include <cctype>
 #include <cwctype>
 
-namespace mime
+namespace xemmaix
 {
 
-namespace xemmai
+namespace mime
 {
 
 namespace

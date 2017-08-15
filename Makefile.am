@@ -1,1 +1,1 @@
-SUBDIRS = mime/xemmai
+SUBDIRS = src

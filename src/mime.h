@@ -1,31 +1,18 @@
-#ifndef MIME__XEMMAI__MIME_H
-#define MIME__XEMMAI__MIME_H
+#ifndef XEMMAIX__MIME__MIME_H
+#define XEMMAIX__MIME__MIME_H
 
 #include <xemmai/convert.h>
 #include <xemmai/bytes.h>
 
+namespace xemmaix
+{
+
 namespace mime
 {
 
-namespace xemmai
-{
+using namespace xemmai;
 
-using ::xemmai::t_object;
-using ::xemmai::t_scan;
-using ::xemmai::t_value;
-using ::xemmai::t_slot;
-using ::xemmai::t_scoped;
-using ::xemmai::t_fundamental;
-using ::xemmai::t_type_of;
-using ::xemmai::f_check;
-using ::xemmai::f_as;
-using ::xemmai::t_define;
-using ::xemmai::f_global;
-using ::xemmai::t_throwable;
-using ::xemmai::t_array;
-using ::xemmai::t_bytes;
-
-class t_extension : public ::xemmai::t_extension
+class t_extension : public xemmai::t_extension
 {
 public:
 	t_extension(t_object* a_module);
