@@ -3,10 +3,7 @@
 #include <cctype>
 #include <cwctype>
 
-namespace xemmaix
-{
-
-namespace mime
+namespace xemmaix::mime
 {
 
 namespace
@@ -152,8 +149,6 @@ void f_quoted_printable_decode(const t_value& a_source, const t_value& a_target)
 	t_string_source source(a_source);
 	t_bytes_target target(a_target);
 	f_quoted_printable_decode(source, target);
-}
-
 }
 
 }

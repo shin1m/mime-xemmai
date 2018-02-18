@@ -1,9 +1,6 @@
 #include "mime.h"
 
-namespace xemmaix
-{
-
-namespace mime
+namespace xemmaix::mime
 {
 
 t_extension::t_extension(t_object* a_module) : xemmai::t_extension(a_module)
@@ -53,8 +50,6 @@ void t_bytes_target::f_flush()
 	if (v_n <= 0) return;
 	v_write(v_buffer, f_global()->f_as(0), f_global()->f_as(v_n));
 	v_n = 0;
-}
-
 }
 
 }

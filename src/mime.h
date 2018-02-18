@@ -4,10 +4,7 @@
 #include <xemmai/convert.h>
 #include <xemmai/bytes.h>
 
-namespace xemmaix
-{
-
-namespace mime
+namespace xemmaix::mime
 {
 
 using namespace xemmai;
@@ -125,8 +122,6 @@ void f_q_encode(const t_value& a_source, const t_value& a_target);
 void f_quoted_printable_encode(const t_value& a_source, const t_value& a_target);
 void f_quoted_printable_encode(const t_value& a_source, const t_value& a_target, size_t a_n);
 void f_quoted_printable_decode(const t_value& a_source, const t_value& a_target);
-
-}
 
 }
 
