@@ -38,7 +38,7 @@ void t_string_target::f_flush()
 
 void t_bytes_source::f_read()
 {
-	t_bytes& bytes = f_as<t_bytes&>(v_buffer);
+	auto& bytes = f_as<t_bytes&>(v_buffer);
 	t_scoped n = v_read(v_buffer, f_global()->f_as(0), f_global()->f_as(bytes.f_size()));
 	f_check<size_t>(n, L"result of read.");
 	v_n = f_as<size_t>(n);

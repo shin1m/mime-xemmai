@@ -9,9 +9,8 @@ namespace xemmaix::mime
 
 using namespace xemmai;
 
-class t_extension : public xemmai::t_extension
+struct t_extension : xemmai::t_extension
 {
-public:
 	t_extension(t_object* a_module);
 	virtual void f_scan(t_scan a_scan);
 	template<typename T>
