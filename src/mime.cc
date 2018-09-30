@@ -5,12 +5,12 @@ namespace xemmaix::mime
 
 t_extension::t_extension(t_object* a_module) : xemmai::t_extension(a_module)
 {
-	f_define<void(*)(const t_value&, const t_value&), f_b_encode>(this, L"b_encode");
-	f_define<void(*)(const t_value&, const t_value&, size_t), f_base64_encode>(this, L"base64_encode");
-	f_define<void(*)(const t_value&, const t_value&), f_base64_decode>(this, L"base64_decode");
-	f_define<void(*)(const t_value&, const t_value&), f_q_encode>(this, L"q_encode");
-	f_define<void(*)(const t_value&, const t_value&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode");
-	f_define<void(*)(const t_value&, const t_value&), f_quoted_printable_decode>(this, L"quoted_printable_decode");
+	f_define<void(*)(const t_value&, const t_value&), f_b_encode>(this, L"b_encode"sv);
+	f_define<void(*)(const t_value&, const t_value&, size_t), f_base64_encode>(this, L"base64_encode"sv);
+	f_define<void(*)(const t_value&, const t_value&), f_base64_decode>(this, L"base64_decode"sv);
+	f_define<void(*)(const t_value&, const t_value&), f_q_encode>(this, L"q_encode"sv);
+	f_define<void(*)(const t_value&, const t_value&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode"sv);
+	f_define<void(*)(const t_value&, const t_value&), f_quoted_printable_decode>(this, L"quoted_printable_decode"sv);
 }
 
 void t_extension::f_scan(t_scan a_scan)
@@ -19,20 +19,21 @@ void t_extension::f_scan(t_scan a_scan)
 
 void t_string_source::f_read()
 {
-	t_scoped p = v_read();
-	if (p) {
-		f_check<const std::wstring*>(p, L"result of read.");
-		v_value = f_as<const std::wstring&>(p);
+	v_value = v_read();
+	if (v_value) {
+		f_check<t_string>(v_value, L"result of read.");
+		auto& p = f_as<const t_string&>(v_value);
+		v_i = p;
+		v_j = v_i + p.f_size();
 	} else {
-		v_value = std::wstring();
+		v_i = v_j = nullptr;
 	}
-	v_i = v_value.begin();
 }
 
 void t_string_target::f_flush()
 {
 	if (v_buffer.empty()) return;
-	v_write(f_global()->f_as(std::wstring(v_buffer.begin(), v_buffer.end())));
+	v_write(t_string::f_instantiate(v_buffer.data(), v_buffer.size()));
 	v_buffer.clear();
 }
 

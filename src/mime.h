@@ -28,20 +28,21 @@ struct t_extension : xemmai::t_extension
 class t_string_source
 {
 	const t_value& v_read;
-	std::wstring v_value;
-	std::wstring::const_iterator v_i;
+	t_scoped v_value;
+	const wchar_t* v_i = nullptr;
+	const wchar_t* v_j = nullptr;
 
 	void f_read();
 
 public:
-	t_string_source(const t_value& a_read) : v_read(a_read), v_i(v_value.begin())
+	t_string_source(const t_value& a_read) : v_read(a_read)
 	{
 	}
 	int f_get()
 	{
-		if (v_i == v_value.end()) {
+		if (v_i == v_j) {
 			f_read();
-			if (v_i == v_value.end()) return -1;
+			if (v_i == v_j) return -1;
 		}
 		return *v_i++;
 	}
