@@ -19,7 +19,7 @@ struct t_extension : xemmai::t_extension
 		return f_global()->f_type<T>();
 	}
 	template<typename T>
-	t_scoped f_as(T&& a_value) const
+	t_pvalue f_as(T&& a_value) const
 	{
 		return f_global()->f_as(std::forward<T>(a_value));
 	}
@@ -27,15 +27,15 @@ struct t_extension : xemmai::t_extension
 
 class t_string_source
 {
-	const t_value& v_read;
-	t_scoped v_value;
+	t_pvalue v_read;
+	t_pvalue v_value;
 	const wchar_t* v_i = nullptr;
 	const wchar_t* v_j = nullptr;
 
 	void f_read();
 
 public:
-	t_string_source(const t_value& a_read) : v_read(a_read)
+	t_string_source(const t_pvalue& a_read) : v_read(a_read)
 	{
 	}
 	int f_get()
@@ -50,11 +50,11 @@ public:
 
 class t_string_target
 {
-	const t_value& v_write;
+	t_pvalue v_write;
 	std::vector<wchar_t> v_buffer;
 
 public:
-	t_string_target(const t_value& a_write) : v_write(a_write)
+	t_string_target(const t_pvalue& a_write) : v_write(a_write)
 	{
 	}
 	~t_string_target()
@@ -70,15 +70,15 @@ public:
 
 class t_bytes_source
 {
-	const t_value& v_read;
-	t_scoped v_buffer;
+	t_pvalue v_read;
+	t_object* v_buffer;
 	size_t v_n = 0;
 	size_t v_i = 0;
 
 	void f_read();
 
 public:
-	t_bytes_source(const t_value& a_read) : v_read(a_read), v_buffer(t_bytes::f_instantiate(1024))
+	t_bytes_source(const t_pvalue& a_read) : v_read(a_read), v_buffer(t_bytes::f_instantiate(1024))
 	{
 	}
 	int f_get()
@@ -93,12 +93,12 @@ public:
 
 class t_bytes_target
 {
-	const t_value& v_write;
-	t_scoped v_buffer;
+	t_pvalue v_write;
+	t_object* v_buffer;
 	size_t v_n = 0;
 
 public:
-	t_bytes_target(const t_value& a_write) : v_write(a_write), v_buffer(t_bytes::f_instantiate(1024))
+	t_bytes_target(const t_pvalue& a_write) : v_write(a_write), v_buffer(t_bytes::f_instantiate(1024))
 	{
 	}
 	~t_bytes_target()
@@ -107,21 +107,21 @@ public:
 	}
 	void f_put(unsigned char a_c)
 	{
-		t_bytes& bytes = f_as<t_bytes&>(v_buffer);
+		auto& bytes = f_as<t_bytes&>(v_buffer);
 		if (v_n >= bytes.f_size()) f_flush();
 		bytes[v_n++] = a_c;
 	}
 	void f_flush();
 };
 
-void f_b_encode(const t_value& a_source, const t_value& a_target);
-void f_base64_encode(const t_value& a_source, const t_value& a_target);
-void f_base64_encode(const t_value& a_source, const t_value& a_target, size_t a_n);
-void f_base64_decode(const t_value& a_source, const t_value& a_target);
-void f_q_encode(const t_value& a_source, const t_value& a_target);
-void f_quoted_printable_encode(const t_value& a_source, const t_value& a_target);
-void f_quoted_printable_encode(const t_value& a_source, const t_value& a_target, size_t a_n);
-void f_quoted_printable_decode(const t_value& a_source, const t_value& a_target);
+void f_b_encode(const t_pvalue& a_source, const t_pvalue& a_target);
+void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target);
+void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n);
+void f_base64_decode(const t_pvalue& a_source, const t_pvalue& a_target);
+void f_q_encode(const t_pvalue& a_source, const t_pvalue& a_target);
+void f_quoted_printable_encode(const t_pvalue& a_source, const t_pvalue& a_target);
+void f_quoted_printable_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n);
+void f_quoted_printable_decode(const t_pvalue& a_source, const t_pvalue& a_target);
 
 }
 

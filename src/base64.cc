@@ -151,28 +151,28 @@ void f_base64_decode(t_string_source& a_source, t_bytes_target& a_target)
 
 }
 
-void f_b_encode(const t_value& a_source, const t_value& a_target)
+void f_b_encode(const t_pvalue& a_source, const t_pvalue& a_target)
 {
 	t_bytes_source source(a_source);
 	t_string_target target(a_target);
 	f_b_encode(source, target);
 }
 
-void f_base64_encode(const t_value& a_source, const t_value& a_target)
+void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target)
 {
 	t_bytes_source source(a_source);
 	t_string_target target(a_target);
 	f_base64_encode(source, target);
 }
 
-void f_base64_encode(const t_value& a_source, const t_value& a_target, size_t a_n)
+void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n)
 {
 	t_bytes_source source(a_source);
 	t_string_target target(a_target);
 	f_base64_encode(source, target, a_n);
 }
 
-void f_base64_decode(const t_value& a_source, const t_value& a_target)
+void f_base64_decode(const t_pvalue& a_source, const t_pvalue& a_target)
 {
 	t_string_source source(a_source);
 	t_bytes_target target(a_target);

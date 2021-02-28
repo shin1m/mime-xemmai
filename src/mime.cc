@@ -5,12 +5,12 @@ namespace xemmaix::mime
 
 t_extension::t_extension(t_object* a_module) : xemmai::t_extension(a_module)
 {
-	f_define<void(*)(const t_value&, const t_value&), f_b_encode>(this, L"b_encode"sv);
-	f_define<void(*)(const t_value&, const t_value&, size_t), f_base64_encode>(this, L"base64_encode"sv);
-	f_define<void(*)(const t_value&, const t_value&), f_base64_decode>(this, L"base64_decode"sv);
-	f_define<void(*)(const t_value&, const t_value&), f_q_encode>(this, L"q_encode"sv);
-	f_define<void(*)(const t_value&, const t_value&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode"sv);
-	f_define<void(*)(const t_value&, const t_value&), f_quoted_printable_decode>(this, L"quoted_printable_decode"sv);
+	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_b_encode>(this, L"b_encode"sv);
+	f_define<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_base64_encode>(this, L"base64_encode"sv);
+	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_base64_decode>(this, L"base64_decode"sv);
+	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_q_encode>(this, L"q_encode"sv);
+	f_define<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode"sv);
+	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_quoted_printable_decode>(this, L"quoted_printable_decode"sv);
 }
 
 void t_extension::f_scan(t_scan a_scan)
@@ -40,7 +40,7 @@ void t_string_target::f_flush()
 void t_bytes_source::f_read()
 {
 	auto& bytes = f_as<t_bytes&>(v_buffer);
-	t_scoped n = v_read(v_buffer, f_global()->f_as(0), f_global()->f_as(bytes.f_size()));
+	auto n = v_read(v_buffer, f_global()->f_as(0), f_global()->f_as(bytes.f_size()));
 	f_check<size_t>(n, L"result of read.");
 	v_n = f_as<size_t>(n);
 	v_i = 0;

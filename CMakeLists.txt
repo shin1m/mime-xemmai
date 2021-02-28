@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.10)
+project(mime-xemmai VERSION 202102)
+find_package(xemmai 202102 REQUIRED)
+add_subdirectory(src)
+enable_testing()
+add_subdirectory(test)
+install(TARGETS mime DESTINATION lib/xemmai-${xemmai_VERSION_MAJOR})
