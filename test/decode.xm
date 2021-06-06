@@ -1,4 +1,4 @@
-$__call = @(decode, text)
+$do = @(decode, text)
 	source = [text]
 	target = ""
 	decode(

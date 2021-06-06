@@ -1,7 +1,7 @@
 system = Module("system"
 print = system.out.write_line
 mime = Module("mime"
-encode = Module("encode"
+encode = Module("encode").do
 assert = @(x) x || throw Throwable("Assertion failed."
 assert_equals = @(actual, expected)
 	print(actual

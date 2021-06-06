@@ -1,4 +1,4 @@
-$__call = @(encode, bytes)
+$do = @(encode, bytes)
 	n = bytes.size(
 	i = 0
 	target = ""

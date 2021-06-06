@@ -3,18 +3,20 @@
 namespace xemmaix::mime
 {
 
-t_extension::t_extension(t_object* a_module) : xemmai::t_extension(a_module)
+void t_library::f_scan(t_scan a_scan)
 {
-	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_b_encode>(this, L"b_encode"sv);
-	f_define<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_base64_encode>(this, L"base64_encode"sv);
-	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_base64_decode>(this, L"base64_decode"sv);
-	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_q_encode>(this, L"q_encode"sv);
-	f_define<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_quoted_printable_encode>(this, L"quoted_printable_encode"sv);
-	f_define<void(*)(const t_pvalue&, const t_pvalue&), f_quoted_printable_decode>(this, L"quoted_printable_decode"sv);
 }
 
-void t_extension::f_scan(t_scan a_scan)
+std::vector<std::pair<t_root, t_rvalue>> t_library::f_define()
 {
+	return t_define(this)
+		(L"b_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_b_encode>())
+		(L"base64_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_base64_encode>())
+		(L"base64_decode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_base64_decode>())
+		(L"q_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_q_encode>())
+		(L"quoted_printable_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_quoted_printable_encode>())
+		(L"quoted_printable_decode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_quoted_printable_decode>())
+	;
 }
 
 void t_string_source::f_read()
@@ -55,7 +57,7 @@ void t_bytes_target::f_flush()
 
 }
 
-XEMMAI__MODULE__FACTORY(xemmai::t_object* a_module)
+XEMMAI__MODULE__FACTORY(xemmai::t_library::t_handle* a_handle)
 {
-	return new xemmaix::mime::t_extension(a_module);
+	return xemmai::f_new<xemmaix::mime::t_library>(a_handle);
 }

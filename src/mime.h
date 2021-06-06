@@ -2,17 +2,17 @@
 #define XEMMAIX__MIME__MIME_H
 
 #include <xemmai/convert.h>
-#include <xemmai/bytes.h>
 
 namespace xemmaix::mime
 {
 
 using namespace xemmai;
 
-struct t_extension : xemmai::t_extension
+struct t_library : xemmai::t_library
 {
-	t_extension(t_object* a_module);
+	using xemmai::t_library::t_library;
 	virtual void f_scan(t_scan a_scan);
+	virtual std::vector<std::pair<t_root, t_rvalue>> f_define();
 	template<typename T>
 	t_object* f_type() const
 	{
