@@ -42,7 +42,7 @@ void t_string_target::f_flush()
 void t_bytes_source::f_read()
 {
 	auto& bytes = f_as<t_bytes&>(v_buffer);
-	auto n = v_read(v_buffer, f_global()->f_as(0), f_global()->f_as(bytes.f_size()));
+	auto n = v_read(v_buffer, 0, bytes.f_size());
 	f_check<size_t>(n, L"result of read.");
 	v_n = f_as<size_t>(n);
 	v_i = 0;
@@ -51,7 +51,7 @@ void t_bytes_source::f_read()
 void t_bytes_target::f_flush()
 {
 	if (v_n <= 0) return;
-	v_write(v_buffer, f_global()->f_as(0), f_global()->f_as(v_n));
+	v_write(v_buffer, 0, v_n);
 	v_n = 0;
 }
 
