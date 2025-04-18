@@ -1,5 +1,4 @@
 #include "mime.h"
-
 #include <cctype>
 #include <cwctype>
 
@@ -26,6 +25,25 @@ inline bool f_is_qspecial(int c)
 	}
 }
 
+inline bool f_is_qpspecial(int c)
+{
+	switch (c) {
+	case '(': case ')': case '<': case '>':	case '@':
+	case ',': case ';': case ':': case '\\': case '"':
+	case '/': case '[': case ']': case '?': case '=':
+		return true;
+	default:
+		return !std::isprint(c);
+	}
+}
+
+inline unsigned char f_h2c(int c)
+{
+	return std::iswdigit(c) ? c - L'0' : c - (std::iswupper(c) ? L'A' : L'a') + 10;
+}
+
+}
+
 void f_q_encode(t_bytes_source& a_source, t_string_target& a_target)
 {
 	int c = a_source.f_get();
@@ -41,19 +59,7 @@ void f_q_encode(t_bytes_source& a_source, t_string_target& a_target)
 	}
 }
 
-inline bool f_is_qpspecial(int c)
-{
-	switch (c) {
-	case '(': case ')': case '<': case '>':	case '@':
-	case ',': case ';': case ':': case '\\': case '"':
-	case '/': case '[': case ']': case '?': case '=':
-		return true;
-	default:
-		return !std::isprint(c);
-	}
-}
-
-void f_quoted_printable_encode(t_bytes_source& a_source, t_string_target& a_target, size_t a_n = 72)
+void f_quoted_printable_encode(t_bytes_source& a_source, t_string_target& a_target, size_t a_n)
 {
 	size_t i = 0;
 	int c = a_source.f_get();
@@ -81,11 +87,6 @@ void f_quoted_printable_encode(t_bytes_source& a_source, t_string_target& a_targ
 		}
 		c = a_source.f_get();
 	}
-}
-
-inline unsigned char f_h2c(int c)
-{
-	return std::iswdigit(c) ? c - L'0' : c - (std::iswupper(c) ? L'A' : L'a') + 10;
 }
 
 void f_quoted_printable_decode(t_string_source& a_source, t_bytes_target& a_target)
@@ -119,36 +120,6 @@ void f_quoted_printable_decode(t_string_source& a_source, t_bytes_target& a_targ
 			c = a_source.f_get();
 		}
 	}
-}
-
-}
-
-void f_q_encode(const t_pvalue& a_source, const t_pvalue& a_target)
-{
-	t_bytes_source source(a_source);
-	t_string_target target(a_target);
-	f_q_encode(source, target);
-}
-
-void f_quoted_printable_encode(const t_pvalue& a_source, const t_pvalue& a_target)
-{
-	t_bytes_source source(a_source);
-	t_string_target target(a_target);
-	f_quoted_printable_encode(source, target);
-}
-
-void f_quoted_printable_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n)
-{
-	t_bytes_source source(a_source);
-	t_string_target target(a_target);
-	f_quoted_printable_encode(source, target, a_n);
-}
-
-void f_quoted_printable_decode(const t_pvalue& a_source, const t_pvalue& a_target)
-{
-	t_string_source source(a_source);
-	t_bytes_target target(a_target);
-	f_quoted_printable_decode(source, target);
 }
 
 }

@@ -105,14 +105,12 @@ public:
 	void f_flush();
 };
 
-void f_b_encode(const t_pvalue& a_source, const t_pvalue& a_target);
-void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target);
-void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n);
-void f_base64_decode(const t_pvalue& a_source, const t_pvalue& a_target);
-void f_q_encode(const t_pvalue& a_source, const t_pvalue& a_target);
-void f_quoted_printable_encode(const t_pvalue& a_source, const t_pvalue& a_target);
-void f_quoted_printable_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n);
-void f_quoted_printable_decode(const t_pvalue& a_source, const t_pvalue& a_target);
+void f_b_encode(t_bytes_source& a_source, t_string_target& a_target);
+void f_base64_encode(t_bytes_source& a_source, t_string_target& a_target, size_t a_n = 72);
+void f_base64_decode(t_string_source& a_source, t_bytes_target& a_target);
+void f_q_encode(t_bytes_source& a_source, t_string_target& a_target);
+void f_quoted_printable_encode(t_bytes_source& a_source, t_string_target& a_target, size_t a_n = 72);
+void f_quoted_printable_decode(t_string_source& a_source, t_bytes_target& a_target);
 
 }
 

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
-project(mime-xemmai VERSION 202306)
-find_package(xemmai 202306 REQUIRED)
+project(mime-xemmai VERSION 202504)
+find_package(xemmai 202504 REQUIRED)
 add_subdirectory(src)
 enable_testing()
 add_subdirectory(test)

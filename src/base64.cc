@@ -17,6 +17,35 @@ const wchar_t v_encoding_b2a[64] = {
 	L'4', L'5', L'6', L'7', L'8', L'9', L'+', L'/'
 };
 
+inline void f_put(t_string_target& a_target, size_t a_n, size_t& a_i, wchar_t a_c)
+{
+	if (a_i >= a_n) {
+		a_target.f_put(L'\r');
+		a_target.f_put(L'\n');
+		a_i = 0;
+	}
+	a_target.f_put(a_c);
+	++a_i;
+}
+
+const int v_encoding_a2b[128] = {
+	-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+	-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
+	-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, 62, -3, -3, -3, 63,
+	52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -3, -3, -3, -2, -3, -3,
+	-3, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+	15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -3, -3, -3, -3, -3,
+	-3, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+	41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -3, -3, -3, -3, -3
+};
+
+inline int f_a2b(int a_c)
+{
+	return a_c == -1 ? -1 : a_c > 127 ? -3 : v_encoding_a2b[a_c];
+}
+
+}
+
 void f_b_encode(t_bytes_source& a_source, t_string_target& a_target)
 {
 	while (true) {
@@ -44,18 +73,7 @@ void f_b_encode(t_bytes_source& a_source, t_string_target& a_target)
 	}
 }
 
-inline void f_put(t_string_target& a_target, size_t a_n, size_t& a_i, wchar_t a_c)
-{
-	if (a_i >= a_n) {
-		a_target.f_put(L'\r');
-		a_target.f_put(L'\n');
-		a_i = 0;
-	}
-	a_target.f_put(a_c);
-	++a_i;
-}
-
-void f_base64_encode(t_bytes_source& a_source, t_string_target& a_target, size_t a_n = 72)
+void f_base64_encode(t_bytes_source& a_source, t_string_target& a_target, size_t a_n)
 {
 	size_t i = 0;
 	while (true) {
@@ -83,22 +101,6 @@ void f_base64_encode(t_bytes_source& a_source, t_string_target& a_target, size_t
 	}
 	a_target.f_put(L'\r');
 	a_target.f_put(L'\n');
-}
-
-const int v_encoding_a2b[128] = {
-	-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-	-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3,
-	-3, -3, -3, -3, -3, -3, -3, -3, -3, -3, -3, 62, -3, -3, -3, 63,
-	52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -3, -3, -3, -2, -3, -3,
-	-3, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-	15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -3, -3, -3, -3, -3,
-	-3, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-	41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -3, -3, -3, -3, -3
-};
-
-inline int f_a2b(int a_c)
-{
-	return a_c == -1 ? -1 : a_c > 127 ? -3 : v_encoding_a2b[a_c];
 }
 
 void f_base64_decode(t_string_source& a_source, t_bytes_target& a_target)
@@ -147,36 +149,6 @@ void f_base64_decode(t_string_source& a_source, t_bytes_target& a_target)
 		}
 		a_target.f_put(d | c);
 	}
-}
-
-}
-
-void f_b_encode(const t_pvalue& a_source, const t_pvalue& a_target)
-{
-	t_bytes_source source(a_source);
-	t_string_target target(a_target);
-	f_b_encode(source, target);
-}
-
-void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target)
-{
-	t_bytes_source source(a_source);
-	t_string_target target(a_target);
-	f_base64_encode(source, target);
-}
-
-void f_base64_encode(const t_pvalue& a_source, const t_pvalue& a_target, size_t a_n)
-{
-	t_bytes_source source(a_source);
-	t_string_target target(a_target);
-	f_base64_encode(source, target, a_n);
-}
-
-void f_base64_decode(const t_pvalue& a_source, const t_pvalue& a_target)
-{
-	t_string_source source(a_source);
-	t_bytes_target target(a_target);
-	f_base64_decode(source, target);
 }
 
 }

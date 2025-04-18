@@ -10,12 +10,58 @@ void t_library::f_scan(t_scan a_scan)
 std::vector<std::pair<t_root, t_rvalue>> t_library::f_define()
 {
 	return t_define(this)
-		(L"b_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_b_encode>())
-		(L"base64_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_base64_encode>())
-		(L"base64_decode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_base64_decode>())
-		(L"q_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_q_encode>())
-		(L"quoted_printable_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&, size_t), f_quoted_printable_encode>())
-		(L"quoted_printable_decode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), f_quoted_printable_decode>())
+	(L"b_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), [](auto a_source, auto a_target)
+	{
+		t_bytes_source source(a_source);
+		t_string_target target(a_target);
+		f_b_encode(source, target);
+	}>())
+	(L"base64_encode"sv,
+		t_static<void(*)(const t_pvalue&, const t_pvalue&), [](auto a_source, auto a_target)
+		{
+			t_bytes_source source(a_source);
+			t_string_target target(a_target);
+			f_base64_encode(source, target);
+		}>(),
+		t_static<void(*)(const t_pvalue&, const t_pvalue&, size_t), [](auto a_source, auto a_target, auto a_n)
+		{
+			t_bytes_source source(a_source);
+			t_string_target target(a_target);
+			f_base64_encode(source, target, a_n);
+		}>()
+	)
+	(L"base64_decode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), [](auto a_source, auto a_target)
+	{
+		t_string_source source(a_source);
+		t_bytes_target target(a_target);
+		f_base64_decode(source, target);
+	}>())
+	(L"q_encode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), [](auto a_source, auto a_target)
+	{
+		t_bytes_source source(a_source);
+		t_string_target target(a_target);
+		f_q_encode(source, target);
+	}>())
+	(L"quoted_printable_encode"sv,
+		t_static<void(*)(const t_pvalue&, const t_pvalue&), [](auto a_source, auto a_target)
+		{
+			t_bytes_source source(a_source);
+			t_string_target target(a_target);
+			f_quoted_printable_encode(source, target);
+		}>(),
+		t_static<void(*)(const t_pvalue&, const t_pvalue&, size_t), [](auto a_source, auto a_target, auto a_n)
+		{
+			t_bytes_source source(a_source);
+			t_string_target target(a_target);
+			f_quoted_printable_encode(source, target, a_n);
+		}>()
+	)
+	(L"quoted_printable_decode"sv, t_static<void(*)(const t_pvalue&, const t_pvalue&), [](auto a_source, auto a_target)
+	{
+		t_string_source source(a_source);
+		t_bytes_target target(a_target);
+		f_quoted_printable_decode(source, target);
+	}>())
 	;
 }
 
